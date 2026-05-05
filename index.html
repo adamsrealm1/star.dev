@@ -41,7 +41,7 @@
     <div class="tab-panels" id="tabPanels">
       <section class="tab-panel is-active" id="home-panel" data-tab-panel="home" tabindex="-1">
         <div class="hero">
-          <p class="eyebrow">Python, and HTML/CSS/JS Developer</p>
+          <p class="eyebrow">Python and HTML/CSS/JS Developer</p>
           <p class="eyebrow">Mapper, Lighter, & Noodler @ Beat Saber</p>
           <h1>I'm Star :)</h1>
           <p class="lead">
@@ -51,16 +51,14 @@
             <button class="button button--primary" type="button" data-tab-target="projects">View projects</button>
           </div>
         </div>
-        <br> <br> <br>
-
-        <section class="overview-grid overview-grid--three" aria-label="Portfolio sections">
+        <section class="overview-grid overview-grid--three overview-grid--home" aria-label="Portfolio sections">
           <button class="simple-card simple-card--button" type="button" data-tab-target="about">
             <h2>About</h2>
-            <p>About myself. Learn my real name, my history, and my interests.</p>
+            <p>A quick intro to who I am, what I make, and what I am into.</p>
           </button>
           <button class="simple-card simple-card--button" type="button" data-tab-target="projects">
             <h2>Projects</h2>
-            <p>All of my projects that I have worked on now and in the past.</p>
+            <p>A collection of things I have worked on now and in the past.</p>
           </button>
           <button class="simple-card simple-card--button" type="button" data-tab-target="skills">
             <h2>Skills</h2>
@@ -77,10 +75,10 @@
 
         <section class="content-panel">
           <p>
-            I am a coder and programmar who likes building <strong>useless</strong> programs and stuff that I find fun. I have been a programmar for like idk maybe 3+ years, yeah i think so. i think i farted. uh enough yapping.
+            I am a coder and programmer who likes building fun tools, experiments, and projects that make me laugh. I have been programming for around 3+ years, mostly by making things, breaking things, and learning from both.
           </p>
           <p>
-            I have experience with Python, HTML/CSS/JS, and a bit of C#. I have made a lot of dumb projects that I am proud of (somehow), and I'm always looking for new things to learn and build. I also like to make tools that make my life easier, and I am always looking for ways to improve my workflow.
+            I have experience with Python, HTML/CSS/JS, and a bit of C#. I am proud of the weird little projects I have made, and I am always looking for new things to learn, build, and improve.
           </p>
         </section>
       </section>
@@ -88,7 +86,7 @@
       <section class="tab-panel" id="projects-panel" data-tab-panel="projects" tabindex="-1" hidden>
         <section class="page-heading">
           <p class="eyebrow">Projects</p>
-          <h1>These are a list of my projects.</h1>
+          <h1>Here are my projects.</h1>
         </section>
 
         <section class="card-grid">
@@ -96,7 +94,7 @@
             <span>Guess Quest</span>
             <h2>Interactive Guessing Game</h2>
             <p>Amazing guessing game, gives you hints, and straight-forward UI with 3 difficulties.</p>
-            <a href="https://github.com/adamsrealm1/guess-quest">Learn more (GitHub)</a>
+            <a href="https://github.com/adamsrealm1/guess-quest" target="_blank" rel="noopener noreferrer">Learn more (GitHub)</a>
             <div class="tags">
               <span>Python</span>
             </div>
@@ -106,8 +104,10 @@
             <span>BSHOF</span>
             <h2>Beat Saber Hall Of Fame</h2>
             <p>All your favorite Beat Saber community members, EXTREMELY smooth animations and effects, and open submissions!</p>
-            <a href="https://github.com/adamsrealm1/bshof">Learn more (GitHub)</a>
-            <a href="https://adamsrealm1.github.io/bshof/">View Website</a>
+            <div class="project-links">
+              <a href="https://github.com/adamsrealm1/bshof" target="_blank" rel="noopener noreferrer">Learn more (GitHub)</a>
+              <a href="https://adamsrealm1.github.io/bshof/" target="_blank" rel="noopener noreferrer">View Website</a>
+            </div>
             <div class="tags">
               <span>CSS</span>
               <span>JavaScript</span>
@@ -117,10 +117,8 @@
 
           <article class="simple-card">
             <h2>Want to see more?</h2>
-            <br>
-            <p style="opacity: 0.1;">glad u asked</p>
-            <br>
-            <a href="https://github.com/adamsrealm1?tab=repositories">GitHub Repo List</a>
+            <p >Well since you asked...</p> <br>
+            <a href="https://github.com/adamsrealm1?tab=repositories" target="_blank" rel="noopener noreferrer">GitHub Repo List</a>
           </article>
         </section>
       </section>
@@ -167,7 +165,7 @@
               <span>Volume</span>
               <strong id="musicVolumeValue">???</strong>
             </label>
-            <input id="musicVolume" class="range-input" type="range" min="0" max="1" step="0.1" value="0.2">
+            <input id="musicVolume" class="range-input" type="range" min="0" max="1" step="0.0001" value="0.2">
           </article>
         </section>
       </section>
@@ -176,11 +174,10 @@
 
   <footer class="footer">
     <p>Made with &heartsuit; by Star</p>
-    <br>
-    <br>
-    <br>
-    <p>ⓘ Secured with HTTPS</p>
-    <p>ⓘ None of your data is collected/stored.</p>
+    <div class="footer__notes">
+      <p>Secured with HTTPS</p>
+      <p>None of your data is collected or stored.</p>
+    </div>
   </footer>
 
   <script src="script.js"></script>

@@ -8,19 +8,23 @@ const ENTER_AUDIO_SRC = "assets/Get%20Your%20Wish%20(Short).MP3";
 const AUDIO_SETTINGS_KEY = "star-dev-audio-settings";
 
 const defaultAudioSettings = {
-  musicEnabled: true,
+  musicEnabled: false,
   musicVolume: 0.2
 };
 
-const bgMusic = new Audio(ENTER_AUDIO_SRC);
+const hasTabbedExperience = panels.length > 0 && Boolean(tabPanels);
+const hasAudioControls = Boolean(document.querySelector("#musicEnabled") && document.querySelector("#musicVolume"));
+const hasAudioExperience = hasTabbedExperience && hasAudioControls;
+const bgMusic = hasAudioExperience ? new Audio(ENTER_AUDIO_SRC) : null;
 let hasEntered = false;
 let activeTab = document.querySelector("[data-tab-panel].is-active")?.dataset.tabPanel || "home";
 let transitionTimer = 0;
 let audioSettings = loadAudioSettings();
 
-bgMusic.loop = true;
-bgMusic.preload = "auto";
-saveAudioSettings();
+if (bgMusic) {
+  bgMusic.loop = true;
+  bgMusic.preload = "auto";
+}
 
 function clampVolume(value, fallback) {
   const parsed = Number.parseFloat(value);
@@ -65,6 +69,8 @@ function syncSettingsControls() {
 }
 
 function applyMusicSettings() {
+  if (!bgMusic) return;
+
   bgMusic.volume = audioSettings.musicVolume;
 
   if (!hasEntered) return;
@@ -182,13 +188,15 @@ function setupInitialTab() {
 }
 
 function createEnterScreen() {
+  if (!hasAudioExperience) return;
+
   const enterScreen = document.createElement("div");
   const enterButton = document.createElement("button");
 
   enterScreen.className = "enter-screen";
   enterButton.className = "enter-screen__button";
   enterButton.type = "button";
-  enterButton.innerHTML = "Welcome,<br>Click to enter.";
+  enterButton.innerHTML = "Welcome,<br>Enter site.";
 
   enterScreen.appendChild(enterButton);
   document.body.appendChild(enterScreen);
@@ -209,6 +217,48 @@ function createEnterScreen() {
     },
     { once: true }
   );
+}
+
+function resetMagneticGlass(element) {
+  element.style.setProperty("--magnet-x", "0px");
+  element.style.setProperty("--magnet-y", "0px");
+  element.style.setProperty("--tilt-x", "0deg");
+  element.style.setProperty("--tilt-y", "0deg");
+  element.style.setProperty("--glare-x", "50%");
+  element.style.setProperty("--glare-y", "50%");
+}
+
+function bindMagneticGlass() {
+  const canHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!canHover || reducedMotion) return;
+
+  const glassElements = document.querySelectorAll(".simple-card, .content-panel, .skill-item, .settings-card, .button");
+
+  glassElements.forEach((element) => {
+    element.classList.add("magnetic-glass");
+    resetMagneticGlass(element);
+
+    element.addEventListener("pointermove", (event) => {
+      const rect = element.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      const centeredX = x - 0.5;
+      const centeredY = y - 0.5;
+
+      element.style.setProperty("--magnet-x", `${centeredX * 8}px`);
+      element.style.setProperty("--magnet-y", `${centeredY * 8}px`);
+      element.style.setProperty("--tilt-x", `${centeredY * -12}deg`);
+      element.style.setProperty("--tilt-y", `${centeredX * 12}deg`);
+      element.style.setProperty("--glare-x", `${x * 100}%`);
+      element.style.setProperty("--glare-y", `${y * 100}%`);
+    });
+
+    element.addEventListener("pointerleave", () => {
+      resetMagneticGlass(element);
+    });
+  });
 }
 
 menuToggle?.addEventListener("click", () => {
@@ -244,8 +294,18 @@ window.addEventListener("resize", () => {
   }, 120);
 });
 
+window.addEventListener("hashchange", () => {
+  const tabFromHash = window.location.hash.replace("#", "");
+  const hasHashPanel = panels.some((panel) => panel.dataset.tabPanel === tabFromHash);
+
+  if (hasHashPanel) {
+    showTab(tabFromHash, { focusPanel: true, updateHash: false });
+  }
+});
+
+setupInitialTab();
 syncSettingsControls();
 bindSettingsControls();
 applyMusicSettings();
-setupInitialTab();
 createEnterScreen();
+bindMagneticGlass();

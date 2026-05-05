@@ -463,6 +463,10 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.overview-grid--home {
+  margin-top: clamp(3.5rem, 9vw, 7rem);
+}
+
 .card-grid {
   margin-top: 2.5rem;
 }
@@ -470,6 +474,8 @@ h2 {
 .simple-card,
 .content-panel,
 .skill-item {
+  position: relative;
+  overflow: hidden;
   background: var(--panel-soft);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -477,7 +483,6 @@ h2 {
 }
 
 .simple-card {
-  position: relative;
   display: block;
   min-height: 220px;
   overflow: hidden;
@@ -490,6 +495,56 @@ h2 {
     0 18px 40px rgba(0, 0, 0, 0.22);
   transform: perspective(1000px) translateZ(0);
   transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.magnetic-glass {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  --magnet-z: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  isolation: isolate;
+  transform: perspective(1100px)
+    translate3d(var(--magnet-x), var(--magnet-y), 0)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y))
+    translateZ(var(--magnet-z));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.magnetic-glass::after {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.68), transparent 22%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06) 42%, transparent 70%);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.magnetic-glass:hover,
+.magnetic-glass:focus-visible {
+  --magnet-z: 28px;
+  border-color: rgba(255, 255, 255, 0.78);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.18) 36%, rgba(83, 210, 255, 0.1) 72%),
+    rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -34px 70px rgba(255, 255, 255, 0.1),
+    0 34px 70px rgba(0, 0, 0, 0.42),
+    0 0 56px rgba(255, 255, 255, 0.22),
+    0 0 38px rgba(83, 210, 255, 0.18);
+}
+
+.magnetic-glass:hover::after,
+.magnetic-glass:focus-visible::after {
+  opacity: 1;
 }
 
 .simple-card:hover,
@@ -505,6 +560,25 @@ h2 {
     0 0 46px rgba(83, 210, 255, 0.12);
   transform: perspective(1000px) rotateX(4deg) rotateY(-3deg) translateY(-8px) translateZ(18px);
   outline: none;
+}
+
+.simple-card.magnetic-glass:hover,
+.simple-card.magnetic-glass:focus-visible {
+  border-color: rgba(255, 255, 255, 0.78);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.18) 36%, rgba(83, 210, 255, 0.1) 72%),
+    rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.62),
+    inset 0 -34px 70px rgba(255, 255, 255, 0.1),
+    0 34px 70px rgba(0, 0, 0, 0.42),
+    0 0 56px rgba(255, 255, 255, 0.22),
+    0 0 38px rgba(83, 210, 255, 0.18);
+  transform: perspective(1100px)
+    translate3d(var(--magnet-x), var(--magnet-y), 0)
+    rotateX(var(--tilt-x))
+    rotateY(var(--tilt-y))
+    translateZ(var(--magnet-z));
 }
 
 .simple-card--button {
@@ -525,6 +599,16 @@ h2 {
 
 .simple-card p {
   margin: 1rem 0 0;
+}
+
+.project-links {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.low-emphasis {
+  opacity: 0.28;
 }
 
 .content-panel {
@@ -753,6 +837,12 @@ h2 {
 
 .footer p {
   margin: 0;
+}
+
+.footer__notes {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 2rem;
 }
 
 @keyframes gridMove {
