@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Star.dev - my portfolio for clean websites, useful tools, and software projects.">
+  <title>star.dev</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="assets/adamsrealm1.jpg">
+  <link rel="apple-touch-icon" href="assets/adamsrealm1.jpg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Primary navigation">
+      <a class="brand" href="#home" data-tab-target="home" aria-label="Star.dev home">
+        <img class="brand__mark" src="assets/adamsrealm1.jpg" alt="Star.dev logo">
+        <span>Star.dev</span>
+      </a>
+
+      <button class="nav__toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="nav__links" id="navLinks">
+        <button class="is-active" type="button" data-tab-target="home" aria-current="page">Home</button>
+        <button type="button" data-tab-target="about">About</button>
+        <button type="button" data-tab-target="projects">Projects</button>
+        <button type="button" data-tab-target="skills">Skills</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page" id="main">
+    <div class="tab-panels" id="tabPanels">
+      <section class="tab-panel is-active" id="home-panel" data-tab-panel="home" tabindex="-1">
+        <div class="hero">
+          <p class="eyebrow">Python, and HTML/CSS/JS Developer</p>
+          <p class="eyebrow">Mapper, Lighter, & Noodler @ Beat Saber</p>
+          <h1>I'm Star :)</h1>
+          <p class="lead">
+            Welcome to my website, enjoy!
+          </p>
+          <div class="actions">
+            <button class="button button--primary" type="button" data-tab-target="projects">View projects</button>
+          </div>
+        </div>
+        <br> <br> <br>
+
+        <section class="overview-grid overview-grid--three" aria-label="Portfolio sections">
+          <button class="simple-card simple-card--button" type="button" data-tab-target="about">
+            <h2>About</h2>
+            <p>About me</p>
+          </button>
+          <button class="simple-card simple-card--button" type="button" data-tab-target="projects">
+            <h2>Projects</h2>
+            <p>All of my projects that I have worked on now and in the past.</p>
+          </button>
+          <button class="simple-card simple-card--button" type="button" data-tab-target="skills">
+            <h2>Skills</h2>
+            <p>Here you will find a list of all of my programming and design skills.</p>
+          </button>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="about-panel" data-tab-panel="about" tabindex="-1" hidden>
+        <section class="page-heading">
+          <p class="eyebrow">About</p>
+          <h1>My name is Adam.</h1>
+        </section>
+
+        <section class="content-panel">
+          <p>
+            I am a coder and programmar who likes building <strong>useless</strong> programs and stuff that I find fun. I have been a programmar for like idk maybe 3+ years, yeah i think so. i think i farted. uh enough yapping.
+          </p>
+          <p>
+            I have experience with Python, HTML/CSS/JS, and a bit of C#. I have made a lot of dumb projects that I am proud of (somehow), and I'm always looking for new things to learn and build. I also like to make tools that make my life easier, and I am always looking for ways to improve my workflow.
+          </p>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="projects-panel" data-tab-panel="projects" tabindex="-1" hidden>
+        <section class="page-heading">
+          <p class="eyebrow">Projects</p>
+          <h1>These are a list of my projects.</h1>
+        </section>
+
+        <section class="card-grid">
+          <article class="simple-card">
+            <span>Guess Quest</span>
+            <h2>Interactive Guessing Game</h2>
+            <p>Amazing guessing game, gives you hints, and straight-forward UI with 3 difficulties.</p>
+            <a href="https://github.com/adamsrealm1/guess-quest">Learn more (GitHub)</a>
+            <div class="tags">
+              <span>Python</span>
+            </div>
+          </article>
+
+          <article class="simple-card">
+            <span>BSHOF</span>
+            <h2>Beat Saber Hall Of Fame</h2>
+            <p>All your favorite Beat Saber community members, EXTREMELY smooth animations and effects, and open submissions!</p>
+            <a href="https://github.com/adamsrealm1/bshof">Learn more (GitHub)</a>
+            <div class="tags">
+              <span>CSS</span>
+              <span>JavaScript</span>
+              <span>HTML</span>
+            </div>
+          </article>
+
+          <article class="simple-card">
+            <h2>Want to see more?</h2>
+            <br>
+            <p style="opacity: 0.1;">glad u asked</p>
+            <br>
+            <a href="https://github.com/adamsrealm1?tab=repositories">GitHub Repo List</a>
+          </article>
+        </section>
+      </section>
+
+      <section class="tab-panel" id="skills-panel" data-tab-panel="skills" tabindex="-1" hidden>
+        <section class="page-heading">
+          <p class="eyebrow">uh yeah the stuff ur looking for is down there :)</p>
+          <h1>Skills</h1>
+        </section>
+
+        <section class="skill-list" aria-label="My skills">
+          <div class="skill-item"><span>01</span><strong>HTML</strong></div>
+          <div class="skill-item"><span>02</span><strong>CSS</strong></div>
+          <div class="skill-item"><span>03</span><strong>JavaScript</strong></div>
+          <div class="skill-item"><span>04</span><strong>Python</strong></div>
+          <div class="skill-item"><span>05</span><strong>C#</strong></div>
+          <div class="skill-item"><span>06</span><strong>Beat Saber Mapping</strong></div>
+          <div class="skill-item"><span>07</span><strong>Beat Saber Lighting</strong></div>
+          <div class="skill-item"><span>08</span><strong>Beat Saber Noodler</strong></div>
+        </section>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>Made with &heartsuit; by Star</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
