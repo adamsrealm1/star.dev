@@ -1,13 +1,99 @@
 const menuToggle = document.querySelector("#menuToggle");
 const navLinks = document.querySelector("#navLinks");
 const tabPanels = document.querySelector("#tabPanels");
-const tabButtons = Array.from(document.querySelectorAll("[data-tab-target]"));
 const navTabButtons = Array.from(document.querySelectorAll(".nav__links [data-tab-target]"));
 const panels = Array.from(document.querySelectorAll("[data-tab-panel]"));
-const ENTER_AUDIO_SRC = "assets/Get%20Your%20Wish%20(Short).MP3";
 
+const ENTER_AUDIO_SRC = "assets/Get%20Your%20Wish%20(Short).MP3";
+const AUDIO_SETTINGS_KEY = "star-dev-audio-settings";
+
+const defaultAudioSettings = {
+  musicEnabled: true,
+  musicVolume: 0.2
+};
+
+const bgMusic = new Audio(ENTER_AUDIO_SRC);
+let hasEntered = false;
 let activeTab = document.querySelector("[data-tab-panel].is-active")?.dataset.tabPanel || "home";
 let transitionTimer = 0;
+let audioSettings = loadAudioSettings();
+
+bgMusic.loop = true;
+bgMusic.preload = "auto";
+saveAudioSettings();
+
+function clampVolume(value, fallback) {
+  const parsed = Number.parseFloat(value);
+  if (Number.isNaN(parsed)) return fallback;
+  return Math.min(1, Math.max(0, parsed));
+}
+
+function loadAudioSettings() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(AUDIO_SETTINGS_KEY) || "{}");
+    return {
+      musicEnabled: typeof saved.musicEnabled === "boolean" ? saved.musicEnabled : defaultAudioSettings.musicEnabled,
+      musicVolume: clampVolume(saved.musicVolume, defaultAudioSettings.musicVolume)
+    };
+  } catch {
+    return { ...defaultAudioSettings };
+  }
+}
+
+function saveAudioSettings() {
+  localStorage.setItem(AUDIO_SETTINGS_KEY, JSON.stringify(audioSettings));
+}
+
+function formatVolume(value) {
+  return `${Math.round(clampVolume(value, 0) * 100)}%`;
+}
+
+function getSettingsControls() {
+  return {
+    musicEnabled: document.querySelector("#musicEnabled"),
+    musicVolume: document.querySelector("#musicVolume"),
+    musicVolumeValue: document.querySelector("#musicVolumeValue")
+  };
+}
+
+function syncSettingsControls() {
+  const controls = getSettingsControls();
+
+  if (controls.musicEnabled) controls.musicEnabled.checked = audioSettings.musicEnabled;
+  if (controls.musicVolume) controls.musicVolume.value = audioSettings.musicVolume;
+  if (controls.musicVolumeValue) controls.musicVolumeValue.textContent = formatVolume(audioSettings.musicVolume);
+}
+
+function applyMusicSettings() {
+  bgMusic.volume = audioSettings.musicVolume;
+
+  if (!hasEntered) return;
+
+  if (audioSettings.musicEnabled) {
+    bgMusic.play().catch(() => {
+      // Browser settings can block audio even after interaction; controls should still update.
+    });
+  } else {
+    bgMusic.pause();
+  }
+}
+
+function bindSettingsControls() {
+  const controls = getSettingsControls();
+
+  controls.musicEnabled?.addEventListener("change", () => {
+    audioSettings.musicEnabled = controls.musicEnabled.checked;
+    saveAudioSettings();
+    applyMusicSettings();
+  });
+
+  controls.musicVolume?.addEventListener("input", () => {
+    audioSettings.musicVolume = clampVolume(controls.musicVolume.value, defaultAudioSettings.musicVolume);
+    saveAudioSettings();
+    syncSettingsControls();
+    applyMusicSettings();
+  });
+}
 
 function setMenu(open) {
   if (!menuToggle || !navLinks) return;
@@ -78,6 +164,8 @@ function showTab(tabName, options = {}) {
 }
 
 function setupInitialTab() {
+  if (!panels.length) return;
+
   const tabFromHash = window.location.hash.replace("#", "");
   const hasHashPanel = panels.some((panel) => panel.dataset.tabPanel === tabFromHash);
   const firstTab = hasHashPanel ? tabFromHash : activeTab;
@@ -96,10 +184,6 @@ function setupInitialTab() {
 function createEnterScreen() {
   const enterScreen = document.createElement("div");
   const enterButton = document.createElement("button");
-  const audio = new Audio(ENTER_AUDIO_SRC);
-
-  audio.volume = 0.5;
-  audio.preload = "auto";
 
   enterScreen.className = "enter-screen";
   enterButton.className = "enter-screen__button";
@@ -113,9 +197,8 @@ function createEnterScreen() {
   enterButton.addEventListener(
     "click",
     () => {
-      audio.play().catch(() => {
-        // Browsers can still block audio in some settings; entering should continue.
-      });
+      hasEntered = true;
+      applyMusicSettings();
 
       enterScreen.classList.add("is-hidden");
       document.body.classList.remove("enter-active");
@@ -161,5 +244,8 @@ window.addEventListener("resize", () => {
   }, 120);
 });
 
+syncSettingsControls();
+bindSettingsControls();
+applyMusicSettings();
 setupInitialTab();
 createEnterScreen();
