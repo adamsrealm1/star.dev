@@ -510,6 +510,11 @@ h2 {
     rotateY(var(--tilt-y))
     translateZ(var(--magnet-z));
   transform-style: preserve-3d;
+  transition:
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    transform 180ms ease;
   will-change: transform;
 }
 
@@ -524,7 +529,7 @@ h2 {
     linear-gradient(145deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06) 42%, transparent 70%);
   border-radius: inherit;
   opacity: 0;
-  transition: opacity 180ms ease;
+  transition: opacity 320ms ease;
 }
 
 .magnetic-glass:hover,
