@@ -234,7 +234,7 @@ function bindMagneticGlass() {
 
   if (!canHover || reducedMotion) return;
 
-  const glassElements = document.querySelectorAll(".simple-card, .content-panel, .skill-item, .settings-card, .button");
+  const glassElements = document.querySelectorAll(".simple-card:not(.static-button), .content-panel, .skill-item, .settings-card, .button:not(.static-button)");
 
   glassElements.forEach((element) => {
     element.classList.add("magnetic-glass");

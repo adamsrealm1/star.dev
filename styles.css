@@ -294,6 +294,23 @@ button {
   transform: translateX(330%) rotate(20deg);
 }
 
+.nav__links .static-button,
+.nav__links .static-button:hover,
+.nav__links .static-button:focus-visible,
+.nav__links .static-button.is-active {
+  color: var(--muted);
+  background: rgba(11, 18, 32, 0.34);
+  border-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+.nav__links .static-button::before,
+.nav__links .static-button:hover::before,
+.nav__links .static-button:focus-visible::before {
+  transform: rotate(20deg);
+}
+
 .nav__toggle {
   display: none;
   width: 44px;
@@ -589,6 +606,24 @@ h2 {
 .simple-card--button {
   width: 100%;
   cursor: pointer;
+}
+
+.simple-card.static-button,
+.simple-card.static-button:hover,
+.simple-card.static-button:focus-visible {
+  background: var(--panel-soft);
+  border-color: var(--border);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.11),
+    inset 0 -30px 60px rgba(0, 0, 0, 0.12),
+    0 18px 40px rgba(0, 0, 0, 0.22);
+  transform: none;
+}
+
+.simple-card.static-button::before,
+.simple-card.static-button:hover::before,
+.simple-card.static-button:focus-visible::before {
+  transform: rotate(20deg);
 }
 
 .simple-card > span,
